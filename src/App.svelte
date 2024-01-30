@@ -23,7 +23,7 @@
     mdiCameraOff,
     mdiCamera,
     mdiMotionPlayOutline,
-    mdiMotionPlay
+    mdiMotionPlay,
   } from '@mdi/js'
   import Icon from 'mdi-svelte'
   import { compareVersions } from 'compare-versions'
@@ -83,7 +83,7 @@
       // This allows you to add a password in the URL like this:
       // http://obs-web.niek.tv/#ws://localhost:4455#password
       if (address.includes('#')) {
-        [address, password] = address.split('#')
+        ;[address, password] = address.split('#')
       }
       await connect()
     }
@@ -103,8 +103,8 @@
   let isIconMode = window.localStorage.getItem('isIconMode') || false
   let isReplaying
   let editable = false
-  let address
-  let password
+  let address = 'ws://192.168.1.2:4455/'
+  let password = 'Hkmj_6969'
   let scenes = []
   let replayError = ''
   let errorMessage = ''
@@ -114,7 +114,7 @@
     ? window.localStorage.setItem('isIconMode', 'true')
     : window.localStorage.removeItem('isIconMode')
 
-  function formatTime (secs) {
+  function formatTime(secs) {
     secs = Math.round(secs / 1000)
     const hours = Math.floor(secs / 3600)
     secs -= hours * 3600
@@ -125,7 +125,7 @@
       : `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`
   }
 
-  function toggleFullScreen () {
+  function toggleFullScreen() {
     if (isFullScreen) {
       if (document.exitFullscreen) {
         document.exitFullscreen()
@@ -145,13 +145,13 @@
     }
   }
 
-  async function toggleStudioMode () {
+  async function toggleStudioMode() {
     await sendCommand('SetStudioModeEnabled', {
-      studioModeEnabled: !isStudioMode
+      studioModeEnabled: !isStudioMode,
     })
   }
 
-  async function toggleReplay () {
+  async function toggleReplay() {
     const data = await sendCommand('ToggleReplayBuffer')
     console.debug('ToggleReplayBuffer', data.outputActive)
     if (data.outputActive === undefined) {
@@ -162,43 +162,43 @@
     } else isReplaying = data.outputActive
   }
 
-  async function switchSceneView () {
+  async function switchSceneView() {
     isSceneOnTop = !isSceneOnTop
   }
 
-  async function startStream () {
+  async function startStream() {
     await sendCommand('StartStream')
   }
 
-  async function stopStream () {
+  async function stopStream() {
     await sendCommand('StopStream')
   }
 
-  async function startRecording () {
+  async function startRecording() {
     await sendCommand('StartRecord')
   }
 
-  async function stopRecording () {
+  async function stopRecording() {
     await sendCommand('StopRecord')
   }
 
-  async function startVirtualCam () {
+  async function startVirtualCam() {
     await sendCommand('StartVirtualCam')
   }
 
-  async function stopVirtualCam () {
+  async function stopVirtualCam() {
     await sendCommand('StopVirtualCam')
   }
 
-  async function pauseRecording () {
+  async function pauseRecording() {
     await sendCommand('PauseRecord')
   }
 
-  async function resumeRecording () {
+  async function resumeRecording() {
     await sendCommand('ResumeRecord')
   }
 
-  async function connect () {
+  async function connect() {
     address = address || 'ws://localhost:4455'
     if (address.indexOf('://') === -1) {
       const secure = location.protocol === 'https:' || address.endsWith(':443')
@@ -209,10 +209,10 @@
     try {
       const { obsWebSocketVersion, negotiatedRpcVersion } = await obs.connect(
         address,
-        password
+        password,
       )
       console.log(
-        `Connected to obs-websocket version ${obsWebSocketVersion} (using RPC ${negotiatedRpcVersion})`
+        `Connected to obs-websocket version ${obsWebSocketVersion} (using RPC ${negotiatedRpcVersion})`,
       )
     } catch (e) {
       console.log(e)
@@ -220,7 +220,7 @@
     }
   }
 
-  async function disconnect () {
+  async function disconnect() {
     await obs.disconnect()
     clearInterval(heartbeatInterval)
     connected = false
@@ -233,7 +233,7 @@
     window.history.pushState(
       '',
       document.title,
-      window.location.pathname + window.location.search
+      window.location.pathname + window.location.search,
     ) // Remove the hash
     console.log('Connection closed')
   })
@@ -249,7 +249,7 @@
       alert(
         'You are running an outdated OBS-websocket (version ' +
           version +
-          '), please upgrade to the latest version for full compatibility.'
+          '), please upgrade to the latest version for full compatibility.',
       )
     }
     if (
@@ -332,11 +332,11 @@
             <button class="button is-info is-light" disabled>
               {#if heartbeat && heartbeat.stats}
                 {Math.round(heartbeat.stats.activeFps)} fps, {Math.round(
-                  heartbeat.stats.cpuUsage
+                  heartbeat.stats.cpuUsage,
                 )}% CPU, {heartbeat.stats.renderSkippedFrames} skipped frames
               {:else}Connected{/if}
             </button>
-            {#if heartbeat && heartbeat.streaming && heartbeat.streaming.outputActive}
+            <!-- {#if heartbeat && heartbeat.streaming && heartbeat.streaming.outputActive}
               <button
                 class="button is-danger"
                 on:click={stopStream}
@@ -353,8 +353,8 @@
               >
                 <span class="icon"><Icon path={mdiAccessPoint} /></span>
               </button>
-            {/if}
-            {#if heartbeat && heartbeat.recording && heartbeat.recording.outputActive}
+            {/if} -->
+            <!-- {#if heartbeat && heartbeat.recording && heartbeat.recording.outputActive}
               {#if heartbeat.recording.outputPaused}
                 <button
                   class="button is-danger"
@@ -388,8 +388,8 @@
               >
                 <span class="icon"><Icon path={mdiRecord} /></span>
               </button>
-            {/if}
-            {#if isVirtualCamActive}
+            {/if} -->
+            <!-- {#if isVirtualCamActive}
               <button
                 class="button is-danger"
                 on:click={stopVirtualCam}
@@ -405,24 +405,24 @@
               >
                 <span class="icon"><Icon path={mdiCamera} /></span>
               </button>
-            {/if}
-            <button
+            {/if} -->
+            <!-- <button
               class:is-light={!isStudioMode}
               class="button is-link"
               on:click={toggleStudioMode}
               title="Toggle Studio Mode"
             >
               <span class="icon"><Icon path={mdiBorderVertical} /></span>
-            </button>
-            <button
+            </button> -->
+            <!-- <button
               class:is-light={!isSceneOnTop}
               class="button is-link"
               on:click={switchSceneView}
               title="Show Scene on Top"
             >
               <span class="icon"><Icon path={mdiArrowSplitHorizontal} /></span>
-            </button>
-            <button
+            </button> -->
+            <!-- <button
               class:is-light={!editable}
               class="button is-link"
               title="Edit Scenes"
@@ -431,8 +431,8 @@
               <span class="icon">
                 <Icon path={editable ? mdiImageEditOutline : mdiImageEdit} />
               </span>
-            </button>
-            <button
+            </button> -->
+            <!-- <button
               class:is-light={!isIconMode}
               class="button is-link"
               title="Show Scenes as Icons"
@@ -445,8 +445,8 @@
                     : mdiSquareRoundedBadge}
                 />
               </span>
-            </button>
-            <button
+            </button> -->
+            <!-- <button
               class:is-light={!isReplaying}
               class:is-danger={replayError}
               class="button is-link"
@@ -459,9 +459,9 @@
                 />
               </span>
               {#if replayError}<span>{replayError}</span>{/if}
-            </button>
-            <ProfileSelect />
-            <SceneCollectionSelect />
+            </button> -->
+            <!-- <ProfileSelect /> -->
+            <!-- <SceneCollectionSelect /> -->
             <button
               class="button is-danger is-light"
               on:click={disconnect}
@@ -494,17 +494,17 @@
 <section class="section">
   <div class="container">
     {#if connected}
-      {#if isSceneOnTop}
+      <!-- {#if isSceneOnTop}
         <ProgramPreview {imageFormat} />
-      {/if}
+      {/if} -->
       <SceneSwitcher
         bind:scenes
         buttonStyle={isIconMode ? 'icon' : 'text'}
         {editable}
       />
-      {#if !isSceneOnTop}
+      <!-- {#if !isSceneOnTop}
         <ProgramPreview {imageFormat} />
-      {/if}
+      {/if} -->
       {#each scenes as scene}
         {#if scene.sceneName.indexOf('(switch)') > 0}
           <SourceSwitcher
@@ -515,15 +515,7 @@
         {/if}
       {/each}
     {:else}
-      <h1 class="subtitle">
-        Welcome to
-        <strong>OBS-web</strong>
-        - the easiest way to control
-        <a href="https://obsproject.com/" target="_blank" rel="noreferrer"
-          >OBS</a
-        >
-        remotely!
-      </h1>
+      <h1 class="subtitle">遙距連接牌藝攻防OBS</h1>
 
       {#if document.location.protocol === 'https:'}
         <div class="notification is-danger">
@@ -548,7 +540,7 @@
         </div>
       {/if}
 
-      <p>To get started, enter your OBS host:port below and click "connect".</p>
+      <p>直接點擊"連接"就能連上OBS。</p>
 
       <form on:submit|preventDefault={connect}>
         <div class="field is-grouped">
@@ -571,11 +563,11 @@
             />
           </p>
           <p class="control">
-            <button class="button is-success">Connect</button>
+            <button class="button is-success">連接</button>
           </p>
         </div>
       </form>
-      <p class="help">
+      <!-- <p class="help">
         Make sure that you use <a
           href="https://github.com/obsproject/obs-studio/releases">OBS v28+</a
         >
@@ -588,12 +580,20 @@
         >
         for v27. If you use an older version of OBS, see the
         <a href="/v4/">archived OBS-web v4</a> page.
-      </p>
+      </p> -->
+      <p style="margin-top:16px;">如果點擊“連接“後沒有反應，請檢查：</p>
+      <ul>
+        <li>網址是否 http 開頭；https 不能用；</li>
+        <li>你現在用的電話／ipad 有沒有連上牌藝攻防 wifi</li>
+        <li>OBS 是否開啟</li>
+        <li>OBS -&gt; 工具 -&gt; WebSocket 有沒有打開</li>
+        <li>OBS -&gt; 工具 -&gt; WebSocket 裡面的IP、密碼有否對上</li>
+      </ul>
     {/if}
   </div>
 </section>
 
-<footer class="footer">
+<!-- <footer class="footer">
   <div class="content has-text-centered">
     <p>
       <strong>OBS-web</strong>
@@ -604,4 +604,4 @@
       for source code.
     </p>
   </div>
-</footer>
+</footer> -->
