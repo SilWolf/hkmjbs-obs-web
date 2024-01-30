@@ -107,10 +107,10 @@
           case '天CAM出街':
             prev.topView = curr
             break
-          case '簡報':
+          case '多合一PPT':
             prev.ppt = curr
             break
-          case '聯賽VIDEO':
+          case '『VIDEO』規則Video':
             prev.tournamentVideo = curr
             break
           case '『VIDEO』開場':
@@ -232,6 +232,13 @@
 </script>
 
 {#if scenesCategory === 'general' && !!generalScenesObj.playerEastHand}
+  <div style="margin-bottom: 16px;text-decoration:underline;">
+    <a
+      href="https://hkmjbs-streaming.web.app/v1/obs/1/scene-control"
+      target="_blank">多合一PPT控制台</a
+    >
+  </div>
+
   <table id="general-table">
     <tr>
       <td style="width:60%">
@@ -256,7 +263,7 @@
     <tr>
       <td style="width:60%">
         <SourceButton
-          name="PPT"
+          name="多合一PPT"
           on:click={sceneClicker(generalScenesObj.ppt)}
           isProgram={programScene === generalScenesObj.ppt.sceneName}
           isPreview={previewScene === generalScenesObj.ppt.sceneName}
