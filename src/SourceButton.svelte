@@ -18,7 +18,6 @@
 <button
   class:title={buttonStyle === 'text'}
   class:program={isProgram}
-  class:preview={isPreview}
   class:with-icon={buttonStyle === 'icon'}
   class:large
   on:click={() => dispatch('click')}

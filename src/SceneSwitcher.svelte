@@ -29,8 +29,14 @@
     topView: {},
     ppt: {},
     tournamentVideo: {},
+    realtimeSummary: {},
     starting: {},
     resting: {},
+    ending: {},
+    playerEastFacialWithBgm: {},
+    playerNorthFacialWithBgm: {},
+    playerSouthFacialWithBgm: {},
+    playerWestFacialWithBgm: {},
   }
   let lastPlayer = 0
   let isStudioMode = false
@@ -110,14 +116,28 @@
           case '多合一PPT':
             prev.ppt = curr
             break
-          case '『VIDEO』規則Video':
-            prev.tournamentVideo = curr
-            break
-          case '『VIDEO』開場':
+          case '『無人聲』開場':
             prev.starting = curr
             break
-          case '『VIDEO』過場':
+          case '『無人聲』過場':
             prev.resting = curr
+            break
+          case '『無人聲』規則Video':
+            prev.tournamentVideo = curr
+            break
+          case '『無人聲』現時數據':
+            prev.realtimeSummary = curr
+            break
+          case '『無人聲』完場':
+            prev.ending = curr
+            break
+          case '『有音樂』東北選手':
+            prev.playerEastFacialWithBgm = curr
+            prev.playerNorthFacialWithBgm = curr
+            break
+          case '『有音樂』西南選手':
+            prev.playerSouthFacialWithBgm = curr
+            prev.playerWestFacialWithBgm = curr
             break
         }
 
@@ -126,18 +146,18 @@
       { ...generalScenesObj },
     )
 
-    data = await sendCommand('GetStudioModeEnabled')
-    if (data && data.studioModeEnabled) {
-      isStudioMode = true
-      previewScene = data.currentPreviewSceneName || ''
-    }
+    // data = await sendCommand('GetStudioModeEnabled')
+    // if (data && data.studioModeEnabled) {
+    //   isStudioMode = true
+    //   previewScene = data.currentPreviewSceneName || ''
+    // }
   })
 
-  obs.on('StudioModeStateChanged', async (data) => {
-    console.log('StudioModeStateChanged', data.studioModeEnabled)
-    isStudioMode = data.studioModeEnabled
-    previewScene = programScene
-  })
+  // obs.on('StudioModeStateChanged', async (data) => {
+  //   console.log('StudioModeStateChanged', data.studioModeEnabled)
+  //   isStudioMode = data.studioModeEnabled
+  //   previewScene = programScene
+  // })
 
   obs.on('SceneListChanged', async (data) => {
     console.log('SceneListChanged', data.scenes.length)
@@ -173,38 +193,38 @@
     programScene = data.sceneName || ''
   })
 
-  obs.on('CurrentPreviewSceneChanged', async (data) => {
-    console.log('CurrentPreviewSceneChanged', data)
-    previewScene = data.sceneName
-  })
+  // obs.on('CurrentPreviewSceneChanged', async (data) => {
+  //   console.log('CurrentPreviewSceneChanged', data)
+  //   previewScene = data.sceneName
+  // })
 
   function sceneClicker(scene) {
     return async function () {
-      if (isStudioMode) {
-        await sendCommand('SetCurrentPreviewScene', {
-          sceneName: scene.sceneName,
-        })
-      } else {
-        await sendCommand('SetCurrentProgramScene', {
-          sceneName: scene.sceneName,
-        })
+      // if (isStudioMode) {
+      //   await sendCommand('SetCurrentPreviewScene', {
+      //     sceneName: scene.sceneName,
+      //   })
+      // } else {
+      await sendCommand('SetCurrentProgramScene', {
+        sceneName: scene.sceneName,
+      })
 
-        if (scene.sceneName === generalScenesObj.playerEastHand.sceneName) {
-          lastPlayer = 0
-        } else if (
-          scene.sceneName === generalScenesObj.playerSouthHand.sceneName
-        ) {
-          lastPlayer = 1
-        } else if (
-          scene.sceneName === generalScenesObj.playerWestHand.sceneName
-        ) {
-          lastPlayer = 2
-        } else if (
-          scene.sceneName === generalScenesObj.playerNorthHand.sceneName
-        ) {
-          lastPlayer = 3
-        }
+      if (scene.sceneName === generalScenesObj.playerEastHand.sceneName) {
+        lastPlayer = 0
+      } else if (
+        scene.sceneName === generalScenesObj.playerSouthHand.sceneName
+      ) {
+        lastPlayer = 1
+      } else if (
+        scene.sceneName === generalScenesObj.playerWestHand.sceneName
+      ) {
+        lastPlayer = 2
+      } else if (
+        scene.sceneName === generalScenesObj.playerNorthHand.sceneName
+      ) {
+        lastPlayer = 3
       }
+      // }
     }
   }
 
@@ -239,40 +259,85 @@
     >
   </div>
 
-  <table id="general-table">
-    <tr>
-      <td style="width:60%">
+  <div class="scenes-group">
+    <p>純音樂、無人聲</p>
+    <div class="flex">
+      <div class="flex-1">
         <SourceButton
           name="開場"
           on:click={sceneClicker(generalScenesObj.starting)}
           isProgram={programScene === generalScenesObj.starting.sceneName}
           isPreview={previewScene === generalScenesObj.starting.sceneName}
           {buttonStyle}
-        /></td
-      >
-      <td colspan={2}>
+        />
+      </div>
+      <div class="flex-1">
         <SourceButton
           name="過場"
           on:click={sceneClicker(generalScenesObj.resting)}
           isProgram={programScene === generalScenesObj.resting.sceneName}
           isPreview={previewScene === generalScenesObj.resting.sceneName}
           {buttonStyle}
-        /></td
-      >
-    </tr>
-    <tr>
-      <td style="width:60%">
+        />
+      </div>
+      <div class="flex-1">
         <SourceButton
-          name="多合一PPT"
-          on:click={sceneClicker(generalScenesObj.ppt)}
-          isProgram={programScene === generalScenesObj.ppt.sceneName}
-          isPreview={previewScene === generalScenesObj.ppt.sceneName}
+          name="完場"
+          on:click={sceneClicker(generalScenesObj.ending)}
+          isProgram={programScene === generalScenesObj.ending.sceneName}
+          isPreview={previewScene === generalScenesObj.ending.sceneName}
           {buttonStyle}
-        /></td
-      >
+        />
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex-1">
+        <SourceButton
+          name="現時數據"
+          on:click={sceneClicker(generalScenesObj.realtimeSummary)}
+          isProgram={programScene ===
+            generalScenesObj.realtimeSummary.sceneName}
+          isPreview={previewScene ===
+            generalScenesObj.realtimeSummary.sceneName}
+          {buttonStyle}
+        />
+      </div>
+      <div class="flex-1"></div>
+    </div>
+  </div>
+
+  <div class="flex" style="margin-top: 16px;">
+    <div class="flex-1">
+      <SourceButton
+        name="訪問東北"
+        on:click={sceneClicker(generalScenesObj.playerEastFacialWithBgm)}
+        isProgram={programScene ===
+          generalScenesObj.playerEastFacialWithBgm.sceneName}
+        isPreview={previewScene ===
+          generalScenesObj.playerEastFacialWithBgm.sceneName}
+        {buttonStyle}
+      />
+    </div>
+    <div class="flex-1">
+      <SourceButton
+        name="訪問西南"
+        on:click={sceneClicker(generalScenesObj.playerWestFacialWithBgm)}
+        isProgram={programScene ===
+          generalScenesObj.playerWestFacialWithBgm.sceneName}
+        isPreview={previewScene ===
+          generalScenesObj.playerWestFacialWithBgm.sceneName}
+        {buttonStyle}
+      />
+    </div>
+  </div>
+
+  <table id="general-table">
+    <tr>
+      <td style="width:60%"></td>
       <td colspan={2}>
         <SourceButton
-          name="聯賽VIDEO"
+          name="規則VIDEO"
           on:click={sceneClicker(generalScenesObj.tournamentVideo)}
           isProgram={programScene ===
             generalScenesObj.tournamentVideo.sceneName}
@@ -283,7 +348,7 @@
       >
     </tr>
     <tr>
-      <td colspan="3">
+      <td>
         <SourceButton
           name="主播區"
           on:click={sceneClicker(generalScenesObj.anchors)}
@@ -292,6 +357,15 @@
           {buttonStyle}
           icon={sceneIcons[generalScenesObj.anchors.sceneName] ||
             `#${Math.floor(Math.random() * 16777215).toString(16)}`}
+        /></td
+      >
+      <td colspan="2">
+        <SourceButton
+          name="PPT"
+          on:click={sceneClicker(generalScenesObj.ppt)}
+          isProgram={programScene === generalScenesObj.ppt.sceneName}
+          isPreview={previewScene === generalScenesObj.ppt.sceneName}
+          {buttonStyle}
         /></td
       >
     </tr>
@@ -558,10 +632,31 @@
   }
 
   #general-table {
-    width: 100%;
+    width: calc(100% + 8px);
+    margin-left: -4px;
+    margin-right: -4px;
   }
 
   #general-table td {
     padding: 4px;
+  }
+
+  .flex {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-2 {
+    flex: 2;
+  }
+
+  .scenes-group {
+    padding: 8px;
+    border: 1px solid #000;
+    border-radius: 4px;
   }
 </style>
