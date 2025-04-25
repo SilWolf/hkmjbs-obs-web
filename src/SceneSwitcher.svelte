@@ -75,67 +75,67 @@
     generalScenesObj = scenes.reduce(
       (prev, curr) => {
         switch (curr.sceneName) {
-          case '東家出街':
+          case '🟩🎥 東位手牌':
             prev.playerEastHand = curr
             break
-          case '南家出街':
+          case '🟩🎥 南位手牌':
             prev.playerSouthHand = curr
             break
-          case '西家出街':
+          case '🟩🎥 西位手牌':
             prev.playerWestHand = curr
             break
-          case '北家出街':
+          case '🟩🎥 北位手牌':
             prev.playerNorthHand = curr
             break
-          case '東北選手':
+          case '🟩🎥 東北訪問':
             prev.playerEastFacial = curr
             prev.playerNorthFacial = curr
             break
-          case '西南選手':
+          case '🟩🎥 南西訪問':
             prev.playerSouthFacial = curr
             prev.playerWestFacial = curr
             break
-          case '東家副露出街':
-            prev.playerEastReveal = curr
-            break
-          case '南家副露出街':
-            prev.playerSouthReveal = curr
-            break
-          case '西家副露出街':
-            prev.playerWestReveal = curr
-            break
-          case '北家副露出街':
-            prev.playerNorthReveal = curr
-            break
-          case '主播區':
+          // case '東家副露出街':
+          //   prev.playerEastReveal = curr
+          //   break
+          // case '南家副露出街':
+          //   prev.playerSouthReveal = curr
+          //   break
+          // case '西家副露出街':
+          //   prev.playerWestReveal = curr
+          //   break
+          // case '北家副露出街':
+          //   prev.playerNorthReveal = curr
+          //   break
+          case '🟩🎥 主播出街':
             prev.anchors = curr
             break
-          case '天CAM出街':
+          case '🟩🎥 天位俯視':
             prev.topView = curr
             break
-          case '多合一PPT':
+          case '🟩🌐 賽前介紹':
             prev.ppt = curr
             break
-          case '『無人聲』開場':
+          case '🟩📼 即將開始':
             prev.starting = curr
             break
-          case '『無人聲』過場':
+          case '🟩📼 稍後繼續':
             prev.resting = curr
             break
-          case '『無人聲』規則Video':
+          case '🟩📼 規則影片':
             prev.tournamentVideo = curr
             break
-          case '『無人聲』現時數據':
+          case '🟩🌐 賽事中場':
             prev.realtimeSummary = curr
             break
-          case '『無人聲』完場':
+          case '🟩🌐 賽事結束':
             prev.ending = curr
             break
-          case '『有音樂』東北選手':
+          case '🟩🎥 東北訪問':
             prev.playerEastFacialWithBgm = curr
             prev.playerNorthFacialWithBgm = curr
             break
-          case '『有音樂』西南選手':
+          case '🟩🎥 南西訪問':
             prev.playerSouthFacialWithBgm = curr
             prev.playerWestFacialWithBgm = curr
             break
@@ -373,7 +373,7 @@
       <td colspan="3"></td>
     </tr>
     <tr>
-      <td style="width:60%">
+      <td colspan={2} style="width:60%">
         <SourceButton
           name="東"
           on:click={sceneClicker(generalScenesObj.playerEastHand)}
@@ -381,19 +381,6 @@
           isPreview={previewScene === generalScenesObj.playerEastHand.sceneName}
           {buttonStyle}
           icon={sceneIcons[generalScenesObj.playerEastHand.sceneName] ||
-            `#${Math.floor(Math.random() * 16777215).toString(16)}`}
-        /></td
-      >
-      <td>
-        <SourceButton
-          name="副"
-          on:click={sceneClicker(generalScenesObj.playerEastReveal)}
-          isProgram={programScene ===
-            generalScenesObj.playerEastReveal.sceneName}
-          isPreview={previewScene ===
-            generalScenesObj.playerEastReveal.sceneName}
-          {buttonStyle}
-          icon={sceneIcons[generalScenesObj.playerEastReveal.sceneName] ||
             `#${Math.floor(Math.random() * 16777215).toString(16)}`}
         /></td
       >
@@ -412,7 +399,7 @@
       >
     </tr>
     <tr>
-      <td>
+      <td colspan={2}>
         <SourceButton
           name="南"
           on:click={sceneClicker(generalScenesObj.playerSouthHand)}
@@ -422,19 +409,6 @@
             generalScenesObj.playerSouthHand.sceneName}
           {buttonStyle}
           icon={sceneIcons[generalScenesObj.playerSouthHand.sceneName] ||
-            `#${Math.floor(Math.random() * 16777215).toString(16)}`}
-        /></td
-      >
-      <td>
-        <SourceButton
-          name="副"
-          on:click={sceneClicker(generalScenesObj.playerSouthReveal)}
-          isProgram={programScene ===
-            generalScenesObj.playerSouthReveal.sceneName}
-          isPreview={previewScene ===
-            generalScenesObj.playerSouthReveal.sceneName}
-          {buttonStyle}
-          icon={sceneIcons[generalScenesObj.playerSouthReveal.sceneName] ||
             `#${Math.floor(Math.random() * 16777215).toString(16)}`}
         /></td
       >
@@ -453,7 +427,7 @@
       >
     </tr>
     <tr>
-      <td>
+      <td colspan={2}>
         <SourceButton
           name="西"
           on:click={sceneClicker(generalScenesObj.playerWestHand)}
@@ -461,19 +435,6 @@
           isPreview={previewScene === generalScenesObj.playerWestHand.sceneName}
           {buttonStyle}
           icon={sceneIcons[generalScenesObj.playerWestHand.sceneName] ||
-            `#${Math.floor(Math.random() * 16777215).toString(16)}`}
-        /></td
-      >
-      <td>
-        <SourceButton
-          name="副"
-          on:click={sceneClicker(generalScenesObj.playerWestReveal)}
-          isProgram={programScene ===
-            generalScenesObj.playerWestReveal.sceneName}
-          isPreview={previewScene ===
-            generalScenesObj.playerWestReveal.sceneName}
-          {buttonStyle}
-          icon={sceneIcons[generalScenesObj.playerWestReveal.sceneName] ||
             `#${Math.floor(Math.random() * 16777215).toString(16)}`}
         /></td
       >
@@ -492,7 +453,7 @@
       >
     </tr>
     <tr>
-      <td>
+      <td colspan={2}>
         <SourceButton
           name="北"
           on:click={sceneClicker(generalScenesObj.playerNorthHand)}
@@ -502,19 +463,6 @@
             generalScenesObj.playerNorthHand.sceneName}
           {buttonStyle}
           icon={sceneIcons[generalScenesObj.playerNorthHand.sceneName] ||
-            `#${Math.floor(Math.random() * 16777215).toString(16)}`}
-        /></td
-      >
-      <td>
-        <SourceButton
-          name="副"
-          on:click={sceneClicker(generalScenesObj.playerNorthReveal)}
-          isProgram={programScene ===
-            generalScenesObj.playerNorthReveal.sceneName}
-          isPreview={previewScene ===
-            generalScenesObj.playerNorthReveal.sceneName}
-          {buttonStyle}
-          icon={sceneIcons[generalScenesObj.playerNorthReveal.sceneName] ||
             `#${Math.floor(Math.random() * 16777215).toString(16)}`}
         /></td
       >
