@@ -90,10 +90,14 @@
           case '🟩🎥 東北訪問':
             prev.playerEastFacial = curr
             prev.playerNorthFacial = curr
+            prev.playerEastFacialWithBgm = curr
+            prev.playerNorthFacialWithBgm = curr
             break
           case '🟩🎥 南西訪問':
             prev.playerSouthFacial = curr
             prev.playerWestFacial = curr
+            prev.playerSouthFacialWithBgm = curr
+            prev.playerWestFacialWithBgm = curr
             break
           // case '東家副露出街':
           //   prev.playerEastReveal = curr
@@ -131,14 +135,14 @@
           case '🟩🌐 賽事結束':
             prev.ending = curr
             break
-          case '🟩🎥 東北訪問':
-            prev.playerEastFacialWithBgm = curr
-            prev.playerNorthFacialWithBgm = curr
-            break
-          case '🟩🎥 南西訪問':
-            prev.playerSouthFacialWithBgm = curr
-            prev.playerWestFacialWithBgm = curr
-            break
+          // case '🟩🎥 東北訪問':
+          //   prev.playerEastFacialWithBgm = curr
+          //   prev.playerNorthFacialWithBgm = curr
+          //   break
+          // case '🟩🎥 南西訪問':
+          //   prev.playerSouthFacialWithBgm = curr
+          //   prev.playerWestFacialWithBgm = curr
+          //   break
         }
 
         return prev
