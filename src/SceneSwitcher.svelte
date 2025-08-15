@@ -88,18 +88,20 @@
             prev.playerNorthHand = curr
             break
           case '🟩 東 (鏡頭)':
-          case '🟩 北 (鏡頭)':
             prev.playerEastFacial = curr
-            prev.playerNorthFacial = curr
             prev.playerEastFacialWithBgm = curr
-            prev.playerNorthFacialWithBgm = curr
             break
           case '🟩 南 (鏡頭)':
-          case '🟩 西 (鏡頭)':
             prev.playerSouthFacial = curr
-            prev.playerWestFacial = curr
             prev.playerSouthFacialWithBgm = curr
+            break
+          case '🟩 西 (鏡頭)':
+            prev.playerWestFacial = curr
             prev.playerWestFacialWithBgm = curr
+            break
+          case '🟩 北 (鏡頭)':
+            prev.playerNorthFacial = curr
+            prev.playerNorthFacialWithBgm = curr
             break
           // case '東家副露出街':
           //   prev.playerEastReveal = curr
@@ -119,7 +121,7 @@
           case '🟩 天位俯視':
             prev.topView = curr
             break
-          case '🟩 賽前介紹':
+          case '🟩 綜合畫面':
             prev.ppt = curr
             break
           case '🟩 直播開始前':
