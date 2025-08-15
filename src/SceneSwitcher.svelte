@@ -75,25 +75,27 @@
     generalScenesObj = scenes.reduce(
       (prev, curr) => {
         switch (curr.sceneName) {
-          case '🟩🎥 東位手牌':
+          case '🟩 東 (手牌)':
             prev.playerEastHand = curr
             break
-          case '🟩🎥 南位手牌':
+          case '🟩 南 (手牌)':
             prev.playerSouthHand = curr
             break
-          case '🟩🎥 西位手牌':
+          case '🟩 西 (手牌)':
             prev.playerWestHand = curr
             break
-          case '🟩🎥 北位手牌':
+          case '🟩 北 (手牌)':
             prev.playerNorthHand = curr
             break
-          case '🟩🎥 東北訪問':
+          case '🟩 東 (鏡頭)':
+          case '🟩 北 (鏡頭)':
             prev.playerEastFacial = curr
             prev.playerNorthFacial = curr
             prev.playerEastFacialWithBgm = curr
             prev.playerNorthFacialWithBgm = curr
             break
-          case '🟩🎥 南西訪問':
+          case '🟩 南 (鏡頭)':
+          case '🟩 西 (鏡頭)':
             prev.playerSouthFacial = curr
             prev.playerWestFacial = curr
             prev.playerSouthFacialWithBgm = curr
@@ -111,35 +113,35 @@
           // case '北家副露出街':
           //   prev.playerNorthReveal = curr
           //   break
-          case '🟩🎥 主播出街':
+          case '🟩 主播室':
             prev.anchors = curr
             break
-          case '🟩🎥 天位俯視':
+          case '🟩 天位俯視':
             prev.topView = curr
             break
-          case '🟩🌐 賽前介紹':
+          case '🟩 賽前介紹':
             prev.ppt = curr
             break
-          case '🟩📼 即將開始':
+          case '🟩 直播開始前':
             prev.starting = curr
             break
-          case '🟩📼 稍後繼續':
+          case '🟩 直播事故中斷':
             prev.resting = curr
             break
-          case '🟩📼 規則影片':
+          case '🟩 播放規則影片':
             prev.tournamentVideo = curr
             break
-          case '🟩🌐 賽事中場':
+          case '🟩 直播中段':
             prev.realtimeSummary = curr
             break
-          case '🟩🌐 賽事結束':
+          case '🟩 直播結束':
             prev.ending = curr
             break
-          // case '🟩🎥 東北訪問':
+          // case '🟩 東北訪問':
           //   prev.playerEastFacialWithBgm = curr
           //   prev.playerNorthFacialWithBgm = curr
           //   break
-          // case '🟩🎥 南西訪問':
+          // case '🟩 南西訪問':
           //   prev.playerSouthFacialWithBgm = curr
           //   prev.playerWestFacialWithBgm = curr
           //   break
