@@ -76,6 +76,8 @@
       isFullScreen = document.msFullscreenElement
     })
 
+    address = document.location.hostname
+
     if (document.location.hash !== '') {
       // Read address from hash
       address = document.location.hash.slice(1)
@@ -103,8 +105,8 @@
   let isIconMode = window.localStorage.getItem('isIconMode') || false
   let isReplaying
   let editable = false
-  let address = 'ws://192.168.1.2:4455/'
-  let password = 'Hkmj_6969'
+  let address = `ws://${document.location.hostname || '192.168.1.2'}:4455/`
+  let password = '123456'
   let scenes = []
   let replayError = ''
   let errorMessage = ''
@@ -199,7 +201,7 @@
   }
 
   async function connect() {
-    address = address || 'ws://localhost:4455'
+    address = `ws://${document.location.hostname || '192.168.1.2'}:4455/`
     if (address.indexOf('://') === -1) {
       const secure = location.protocol === 'https:' || address.endsWith(':443')
       address = secure ? 'wss://' : 'ws://' + address
